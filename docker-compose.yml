@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    command: node --require newrelic hello-world.js
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./hello-world.js:/app/hello-world.js
+    environment:
+      - NEW_RELIC_APP_NAME=TESTAPP
+      - NEW_RELIC_LICENSE_KEY=replacewithkey
+      - NEW_RELIC_LOG=stdout
+      - NEW_RELIC_LOG_LEVEL=info
+      - NEW_RELIC_NO_CONFIG_FILE=true
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.0.12

@@ -1,0 +1,13 @@
+{
+  "name": "test-newrelic-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
+    "koa-mongo": "^1.9.2",
+    "newrelic": "^7.0.2",
+    "koa-session-mongo2": "^1.1.1",
+    "mongodb": "^3.5.5"
+  }
+}
