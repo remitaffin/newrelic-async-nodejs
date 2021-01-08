@@ -18,12 +18,18 @@ app.use(mongo({
 }))
 
 router.get('/', async (ctx) => {
-  const result = await ctx.db.collection('users').insert({ name: 'haha' })
-  const userId = result.ops[0]._id.toString()
-  ctx.body = await ctx.db.collection('users').find().toArray()
-  ctx.db.collection('users').remove({
-    _id: mongo.ObjectId(userId)
-  })
+  console.log("Starting");
+  for (var i = 1; i < 1000; i++) {
+    console.log(i);
+    const result = await ctx.db.collection('users').insert({ name: 'haha' })
+    const userId = result.ops[0]._id.toString()
+    ctx.body = await ctx.db.collection('users').find().toArray()
+    ctx.db.collection('users').remove({
+      _id: mongo.ObjectId(userId)
+    });
+  }
+  ctx.status = 200;
+  console.log("Ending");
 })
 
 const returnInstant200 = async (ctx, next) => {
@@ -33,20 +39,18 @@ const returnInstant200 = async (ctx, next) => {
 };
 
 router.get('/background', returnInstant200, async (ctx) => {
+  console.log("Starting");
   for (var i = 1; i < 1000; i++) {
     console.log(i);
     const result = await ctx.db.collection('users').insert({ name: 'haha' })
     const userId = result.ops[0]._id.toString()
-    setTimeout(async function () {
-      ctx.body = await ctx.db.collection('users').find().toArray()
-      ctx.db.collection('users').remove({
-        _id: mongo.ObjectId(userId)
-      })
-      console.log(ctx.body);
-    }, 1000);
-
+    ctx.body = await ctx.db.collection('users').find().toArray()
+    ctx.db.collection('users').remove({
+      _id: mongo.ObjectId(userId)
+    });
   }
   ctx.status = 200;
+  console.log("Ending");
 })
 
 app.use(router.routes())
